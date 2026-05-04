@@ -70,10 +70,10 @@ export default function LibraryInfoBox({ info }: Props) {
 
         {boolFields.some((f) => f.value !== undefined) && (
           <div className="pt-4 mt-4 border-t border-stone-100">
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-4">
               {boolFields.map((field) => (
-                <div key={field.label} className="flex items-center justify-between gap-2">
-                  <span className="text-sm text-stone-400">{field.label}</span>
+                <div key={field.label} className="flex flex-col gap-1">
+                  <span className="text-xs text-stone-400 leading-none">{field.label}</span>
                   <StatusBadge value={field.value} />
                 </div>
               ))}
