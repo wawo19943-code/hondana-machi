@@ -56,6 +56,8 @@ export type AffiliateItem = {
   description?: string;
   url: string;
   author?: string;
+  label?: string;
+  trackingPixel?: string;
 };
 
 export type AffiliateLinks = {
@@ -63,6 +65,18 @@ export type AffiliateLinks = {
   travel?: AffiliateItem;
   goods?: AffiliateItem;
 };
+
+// `hotel:` キーを travel スロットにマップする
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function normalizeAffiliate(data: any): AffiliateLinks | undefined {
+  const aff = data.affiliate;
+  if (!aff) return undefined;
+  return {
+    book:   aff.book,
+    travel: aff.travel ?? aff.hotel,
+    goods:  aff.goods,
+  };
+}
 
 export type PostMeta = {
   slug: string;
@@ -137,6 +151,6 @@ export function getPostBySlug(slug: string): Post | null {
     content,
     libraryInfo: normalizeLibraryInfo(data),
     nearbySpots: data.nearbySpots,
-    affiliate: data.affiliate,
+    affiliate: normalizeAffiliate(data),
   };
 }

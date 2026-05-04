@@ -60,11 +60,15 @@ function AffiliateSection({ heading, icon, iconBg, item, linkText }: SectionProp
             rel="noopener noreferrer sponsored"
             className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-stone-900 border border-stone-200 hover:border-stone-400 rounded-lg px-3 py-1.5 transition-colors"
           >
-            {linkText}
+            {item.label ?? linkText}
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
           </a>
+          {item.trackingPixel && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={item.trackingPixel} width={1} height={1} alt="" aria-hidden="true" style={{ display: "block" }} />
+          )}
         </div>
       </div>
     </div>
