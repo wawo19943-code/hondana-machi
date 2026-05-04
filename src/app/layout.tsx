@@ -3,6 +3,7 @@ import { Noto_Serif_JP, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Script from "next/script";
 
 const notoSerifJP = Noto_Serif_JP({
   variable: "--font-noto-serif-jp",
@@ -34,6 +35,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" className={`${notoSerifJP.variable} ${playfairDisplay.variable}`}>
+      <head>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-FNEKGYCPRW"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-FNEKGYCPRW');
+          `}
+        </Script>
+      </head>
       <body className="min-h-screen flex flex-col bg-stone-50">
         <Header />
         <main className="flex-1">{children}</main>
