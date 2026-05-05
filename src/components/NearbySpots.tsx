@@ -20,11 +20,13 @@ const spotLinkConfig: Record<SpotType, { text: string }> = {
   sightseeing: { text: "Google Mapsで見る" },
   food:        { text: "食べログで見る" },
   hotel:       { text: "じゃらんで予約" },
+  shopping:    { text: "Google Mapsで見る" },
+  access:      { text: "Google Mapsで見る" },
 };
 
 function getLinkText(spotType?: SpotType): string {
   if (!spotType) return "Google Mapsで見る";
-  return spotLinkConfig[spotType].text;
+  return spotLinkConfig[spotType]?.text ?? "Google Mapsで見る";
 }
 
 function getCategoryColor(category?: string): string {
