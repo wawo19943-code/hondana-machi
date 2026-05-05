@@ -40,7 +40,7 @@ function normalizeLibraryInfo(data: any): LibraryInfo | undefined {
   };
 }
 
-export type SpotType = "sightseeing" | "food" | "hotel";
+export type SpotType = "sightseeing" | "food" | "hotel" | "shopping" | "access";
 
 export type NearbySpot = {
   name: string;
