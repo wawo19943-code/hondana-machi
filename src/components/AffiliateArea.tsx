@@ -88,7 +88,7 @@ export default function AffiliateArea({ links }: Props) {
             icon={<TravelIcon />}
             iconBg="bg-sky-50 text-sky-500"
             item={links.travel}
-            linkText="じゃらんで見る"
+            linkText="楽天トラベルで見る"
           />
         )}
         {links.book && (
