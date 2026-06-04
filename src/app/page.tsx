@@ -14,7 +14,7 @@ export default function Home() {
     <div>
       {/* ヒーロー */}
       <div className="hero-pattern border-b border-amber-100">
-        <div className="max-w-[720px] mx-auto px-4 py-20 sm:py-28">
+        <div className="max-w-[1100px] mx-auto px-4 py-20 sm:py-28">
           <p className="font-playfair text-sm tracking-widest text-amber-700 mb-4 uppercase">
             Travel &amp; Architecture
           </p>
@@ -33,7 +33,7 @@ export default function Home() {
       </div>
 
       {/* 記事一覧（タグフィルター付き） */}
-      <div className="max-w-[720px] mx-auto px-4 py-12">
+      <div className="max-w-[1100px] mx-auto px-4 py-12">
         {posts.length === 0 ? (
           <p className="text-stone-400 text-sm">まだ記事がありません。</p>
         ) : (
