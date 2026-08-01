@@ -26,6 +26,9 @@ export const metadata: Metadata = {
     template: "%s | 本棚のある街へ",
   },
   description: "図書館の建築・空間を旅日記のトーンで紹介するブログ",
+  verification: {
+    google: "BdhhDHHG6JdPOJ2yzXmo3FCbP6jcEKZN89djowrlHoc",
+  },
 };
 
 export default function RootLayout({
