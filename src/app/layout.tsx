@@ -28,6 +28,7 @@ export const metadata: Metadata = {
   description: "図書館の建築・空間を旅日記のトーンで紹介するブログ",
   verification: {
     google: "BdhhDHHG6JdPOJ2yzXmo3FCbP6jcEKZN89djowrlHoc",
+	"fGKotRheTBzU6yCE0uOM12XMf6wcs9I4SCjh8F_BF1Y",
   },
 };
 
