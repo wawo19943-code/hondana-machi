@@ -19,6 +19,26 @@ export type LibraryInfo = {
   officialUrl?: string;
 };
 
+// frontmatter の日付を "YYYY-MM-DD" 文字列に正規化する
+// （YAML でクォートし忘れると gray-matter が Date オブジェクトを返すため）
+function toDateString(value: unknown): string | undefined {
+  if (value === undefined || value === null || value === "") return undefined;
+  if (value instanceof Date) return value.toISOString().slice(0, 10);
+  return String(value);
+}
+
+// 蔵書数を表示用の文字列にする
+// 数値なら3桁区切り、"記載なし" や真偽値など表示できない値は undefined
+function normalizeCollection(value: unknown): string | undefined {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return `${value.toLocaleString("ja-JP")}冊`;
+  }
+  if (typeof value === "string" && value !== "" && value !== "記載なし") {
+    return value;
+  }
+  return undefined;
+}
+
 // `library:` キー（短縮形）を LibraryInfo に変換する
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function normalizeLibraryInfo(data: any): LibraryInfo | undefined {
@@ -29,7 +49,7 @@ function normalizeLibraryInfo(data: any): LibraryInfo | undefined {
     address:    lib.address,
     hours:      lib.hours,
     closedDays: lib.closed,
-    collection: lib.books !== "記載なし" ? lib.books : undefined,
+    collection: normalizeCollection(lib.books),
     lightNovels: lib.lightnovel,
     manga:      lib.manga,
     wifi:       lib.wifi,
@@ -81,7 +101,10 @@ function normalizeAffiliate(data: any): AffiliateLinks | undefined {
 export type PostMeta = {
   slug: string;
   title: string;
+  /** 初出日。加筆改稿しても変更しない */
   date: string;
+  /** 加筆改稿した日。未設定なら未改稿 */
+  updated?: string;
   excerpt: string;
   location: string;
   coverImage?: string;
@@ -114,7 +137,8 @@ export function getAllPosts(): PostMeta[] {
     return {
       slug,
       title: data.title ?? "",
-      date: data.date ?? "",
+      date: toDateString(data.date) ?? "",
+      updated: toDateString(data.updated),
       excerpt: data.excerpt ?? "",
       location: data.location ?? "",
       coverImage: data.image ?? data.coverImage,
@@ -124,7 +148,9 @@ export function getAllPosts(): PostMeta[] {
     } satisfies PostMeta;
   });
 
-  return posts.sort((a, b) => (a.date < b.date ? 1 : -1));
+  // 並び順は「最終更新日」の新しい順。updated がなければ初出日を使う
+  const sortKey = (post: PostMeta) => post.updated ?? post.date;
+  return posts.sort((a, b) => (sortKey(a) < sortKey(b) ? 1 : -1));
 }
 
 export function getPostBySlug(slug: string): Post | null {
@@ -141,7 +167,8 @@ export function getPostBySlug(slug: string): Post | null {
   return {
     slug,
     title: data.title ?? "",
-    date: data.date ?? "",
+    date: toDateString(data.date) ?? "",
+    updated: toDateString(data.updated),
     excerpt: data.excerpt ?? "",
     location: data.location ?? "",
     coverImage: data.image ?? data.coverImage,

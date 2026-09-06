@@ -48,11 +48,17 @@ export default async function PostPage({ params }: Props) {
   const newerPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
   const olderPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 
-  const formattedDate = new Date(post.date).toLocaleDateString("ja-JP", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  const formatDate = (value: string) =>
+    new Date(value).toLocaleDateString("ja-JP", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+
+  // 表示は最終更新日を優先し、改稿済みの記事だけ初稿日を併記する
+  const displayDate = post.updated ?? post.date;
+  const formattedDate = formatDate(displayDate);
+  const formattedOriginalDate = post.updated ? formatDate(post.date) : null;
 
   return (
     <div className="max-w-[720px] mx-auto px-4 py-10">
@@ -70,7 +76,13 @@ export default async function PostPage({ params }: Props) {
       {/* 1. タイトル・場所・日付 */}
       <header className="mb-8">
         <div className="flex items-center gap-2 text-xs text-stone-400 mb-4">
-          <time dateTime={post.date}>{formattedDate}</time>
+          <time dateTime={displayDate}>
+            {formattedDate}
+            {post.updated && " 更新"}
+          </time>
+          {formattedOriginalDate && (
+            <span className="text-stone-300">初稿 {formattedOriginalDate}</span>
+          )}
           <span>·</span>
           <span className="flex items-center gap-1">
             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
