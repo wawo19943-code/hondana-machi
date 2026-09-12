@@ -1,4 +1,5 @@
 import { MDXRemote } from "next-mdx-remote/rsc";
+import remarkGfm from "remark-gfm";
 
 type Props = {
   source: string;
@@ -18,8 +19,20 @@ export default function MdxContent({ source }: Props) {
       prose-strong:text-stone-800
       prose-img:rounded-xl prose-img:shadow-sm
       prose-hr:border-stone-200
-      prose-li:text-stone-700 prose-li:leading-[1.8]">
-      <MDXRemote source={source} />
+      prose-li:text-stone-700 prose-li:leading-[1.8]
+      prose-table:text-sm prose-table:my-8
+      prose-thead:border-b prose-thead:border-stone-300
+      prose-th:text-left prose-th:font-medium prose-th:text-stone-600 prose-th:py-2.5 prose-th:px-3
+      prose-td:py-2.5 prose-td:px-3 prose-td:align-top prose-td:text-stone-700
+      prose-tr:border-b prose-tr:border-stone-100">
+      <MDXRemote
+        source={source}
+        options={{
+          mdxOptions: {
+            remarkPlugins: [remarkGfm],
+          },
+        }}
+      />
     </div>
   );
 }
