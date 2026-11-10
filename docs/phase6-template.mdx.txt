@@ -1,0 +1,47 @@
+---
+title: "キャッチコピー——スポット名"
+date: "2026-11-11"
+series: "phase6"
+seriesNumber: 1
+location: "都道府県市区町村"
+tags: ["都道府県", "本の宿", "観光地近く"]
+image: "/images/slug.png"
+imageAlt: "スポット名のイメージ"
+excerpt: "120〜180字の要約"
+bookspot:
+  kind: "本の宿"            # 本屋 / 古書店街 / 本の宿 / 本と出会う場所（入場料制） / 古本まつり など
+  address: "住所"
+  hours: "営業時間（宿ならチェックイン・アウト）"
+  closed: "定休日"
+  price: "入場料・宿泊料の目安"
+  stay: true
+  cafe: true
+  wifi: true
+  power: false
+  parking: true
+  official_url: "https://..."
+related:
+  - slug: shiojiri-enpark
+    reason: "同じ松本平の図書館"
+  - slug: nagano-pref-library
+    reason: "長野県の県立図書館"
+nearbySpots:
+  - name: "スポット名"
+    category: "歴史・文化"
+    spotType: "近隣"
+    distance: "約1km（徒歩約15分）"
+    url: "https://www.google.com/maps/search/?api=1&query=スポット名"
+    description: "説明文"
+affiliate:
+  hotel:
+    title: "◯◯の宿を探す"
+    description: "説明文"
+    url: "//af.moshimo.com/af/c/click?a_id=5550665&p_id=55&pc_id=55&pl_id=635"
+    label: "楽天トラベルで宿を探す"
+    trackingPixel: "//i.moshimo.com/af/i/impression?a_id=5550665&p_id=55&pc_id=55&pl_id=635"
+---
+
+※画像はAIによるイメージです。実際とは異なります。
+
+本文。ほかの記事に触れるときは [図書館名](/posts/slug) の形でリンクする
+（本文でリンクした記事は、related に書かなくても記事末尾のカードに自動で出る）。

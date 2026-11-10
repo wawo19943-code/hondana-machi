@@ -1,7 +1,11 @@
-import { getAllPosts, getPostBySlug } from "@/lib/posts";
+import { getAllPosts, getPostBySlug, getRelatedPosts, getSeriesNeighbors } from "@/lib/posts";
+import { getSeriesName } from "@/lib/series";
 import { getTagType } from "@/lib/tags";
 import MdxContent from "@/components/MdxContent";
 import LibraryInfoBox from "@/components/LibraryInfoBox";
+import BookSpotInfoBox from "@/components/BookSpotInfoBox";
+import RelatedPosts from "@/components/RelatedPosts";
+import SeriesNav from "@/components/SeriesNav";
 import NearbySpots from "@/components/NearbySpots";
 import AffiliateArea from "@/components/AffiliateArea";
 import LibraryPlaceholder from "@/components/LibraryPlaceholder";
@@ -47,6 +51,10 @@ export default async function PostPage({ params }: Props) {
   const currentIndex = allPosts.findIndex((p) => p.slug === slug);
   const newerPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
   const olderPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+
+  const relatedPosts = getRelatedPosts(post);
+  const series = getSeriesNeighbors(post);
+  const seriesName = getSeriesName(post.series);
 
   const formatDate = (value: string) =>
     new Date(value).toLocaleDateString("ja-JP", {
@@ -134,6 +142,9 @@ export default async function PostPage({ params }: Props) {
       {/* 4. 図書館基本情報ボックス */}
       {post.libraryInfo && <LibraryInfoBox info={post.libraryInfo} />}
 
+      {/* 4b. 本屋・本の宿・本の街の基本情報ボックス（Phase 6） */}
+      {post.bookSpot && <BookSpotInfoBox info={post.bookSpot} />}
+
       {/* 5. 周辺スポット */}
       {post.nearbySpots && post.nearbySpots.length > 0 && (
         <NearbySpots spots={post.nearbySpots} />
@@ -141,6 +152,20 @@ export default async function PostPage({ params }: Props) {
 
       {/* 6. アフィリエイトエリア */}
       {post.affiliate && <AffiliateArea links={post.affiliate} />}
+
+      {/* 6b. つながる記事（related + 逆リンク） */}
+      <RelatedPosts posts={relatedPosts} />
+
+      {/* 6c. シリーズ内の前後 */}
+      {seriesName && post.seriesNumber !== undefined && (
+        <SeriesNav
+          seriesName={seriesName}
+          seriesNumber={post.seriesNumber}
+          total={series.total}
+          prev={series.prev}
+          next={series.next}
+        />
+      )}
 
       {/* 7. 末尾タグ（クリックでTOPページのフィルターへ） */}
       {post.tags && post.tags.length > 0 && (
